@@ -198,15 +198,16 @@
   { title: "El Verdadero Reguetón", url: "https://youtube.com/embed/cYEjuWomzCI?autoplay=1" }
     ];
     
+    
     const elCorazonSeEleva = [
 { title: "Deja que el viento nos lleve", url: "https://www.youtube.com/embed/RLyNKeiRtwc?autoplay=1" }
     ];
     
     let currentPlayer = null;
 
- function renderTracks(album) {
+function renderTracks(album) {
   const list = document.getElementById("tracklist");
-  list.innerHTML = "";
+  list.innerHTML = "";  // Limpiar lista de canciones
 
   let tracks;
   if (album === 0) {
@@ -214,28 +215,10 @@
   } else if (album === 1) {
     tracks = sombrasDelCamino;
   } else if (album === 2) {
-    tracks = elCorazonSeEleva;  // Ahora se asigna correctamente el tercer álbum
+    tracks = elCorazonSeEleva; // Aquí se agrega el tercer álbum
   }
 
-  tracks.forEach((track, index) => {
-    const div = document.createElement("div");
-    div.className = "track";
-    div.innerHTML = `
-      <span>${track.title}</span>
-      <button onclick="playTrack(${index}, ${album})">Reproducir</button>
-      <div class="player-container" id="player-${album}-${index}">
-        <!-- Aquí aparecerá el reproductor -->
-      </div>
-    `;
-    list.appendChild(div);
-  });
-}
-
- function renderTracks(album) {
-  const list = document.getElementById("tracklist");
-  list.innerHTML = "";
-
-  const tracks = album === 0 ? caminosDeMelodia : (album === 1 ? sombrasDelCamino : []);
+  // Crear la lista de canciones
   tracks.forEach((track, index) => {
     const div = document.createElement("div");
     div.className = "track";
@@ -251,41 +234,51 @@
 }
 
 function playTrack(index, album) {
+  // Limpiar cualquier reproductor anterior
   if (currentPlayer !== null) {
     currentPlayer.innerHTML = "";
     currentPlayer.style.display = "none";
   }
 
-  const tracks = album === 0 ? caminosDeMelodia : (album === 1 ? sombrasDelCamino : elCorazonSeEleva);
-  const track = tracks[index];
-  
+  let tracks;
+  if (album === 0) {
+    tracks = caminosDeMelodia;
+  } else if (album === 1) {
+    tracks = sombrasDelCamino;
+  } else if (album === 2) {
+    tracks = elCorazonSeEleva;
+  }
+
+  // Crear iframe con el enlace de YouTube
   const iframe = document.createElement("iframe");
-  iframe.src = `${track.url}&mute=0`;  // Añade mute=0 aquí
-  iframe.width = "560";
-  iframe.height = "315";
-  iframe.frameborder = "0";
+  iframe.src = tracks[index].url;
   iframe.allow = "autoplay; encrypted-media";
   iframe.allowfullscreen = true;
 
+  // Mostrar el reproductor en la interfaz
   const playerContainer = document.getElementById(`player-${album}-${index}`);
   playerContainer.innerHTML = "";
   playerContainer.appendChild(iframe);
   playerContainer.style.display = "block";
 
+  // Guardar referencia al reproductor actual
   currentPlayer = playerContainer;
 }
 
-    function selectAlbum(index) {
-      const albums = document.querySelectorAll('.album');
-      albums.forEach((el, i) => {
-        el.classList.toggle('selected', i === index);
-      });
+function selectAlbum(index) {
+  // Cambiar la clase "selected" en los álbumes
+  document.querySelectorAll(".album").forEach((el, i) => {
+    el.classList.toggle("selected", i === index);
+  });
 
-      const albumTitles = ["Caminos de Melodía", "Sombras del Camino", "El corazón se Eleva"];
-      document.getElementById("album-title").textContent = albumTitles[index];
+  // Títulos de los álbumes
+  const albumTitles = ["Caminos de Melodía", "Sombras del Camino", "El Corazón Se Eleva"];
+  document.getElementById("album-title").textContent = albumTitles[index];
 
-      renderTracks(index);
-    }
+  // Cargar las canciones del álbum seleccionado
+  renderTracks(index);
+}
+
 
     renderTracks(0); // Cargar el primer álbum por defecto
   </script>
