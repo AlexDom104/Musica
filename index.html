@@ -256,29 +256,24 @@ function playTrack(index, album) {
     currentPlayer.style.display = "none";
   }
 
-  const tracks = album === 0 ? caminosDeMelodia : (album === 1 ? sombrasDelCamino : []);
+  const tracks = album === 0 ? caminosDeMelodia : (album === 1 ? sombrasDelCamino : elCorazonSeEleva);
   const track = tracks[index];
   
-  // Crear el iframe con autoplay
   const iframe = document.createElement("iframe");
-  iframe.src = `${track.url}?autoplay=1`;  // Asegurarse de que autoplay esté presente en la URL
+  iframe.src = `${track.url}&mute=0`;  // Añade mute=0 aquí
   iframe.width = "560";
   iframe.height = "315";
   iframe.frameborder = "0";
-  iframe.allow = "autoplay; encrypted-media"; // Asegurarse de que YouTube permita autoplay
+  iframe.allow = "autoplay; encrypted-media";
   iframe.allowfullscreen = true;
 
-  // Seleccionar el contenedor donde se mostrará el video
   const playerContainer = document.getElementById(`player-${album}-${index}`);
-  playerContainer.innerHTML = "";  // Limpiar cualquier contenido previo
-  playerContainer.appendChild(iframe);  // Agregar el iframe al contenedor
-  playerContainer.style.display = "block";  // Asegurar que el contenedor sea visible
+  playerContainer.innerHTML = "";
+  playerContainer.appendChild(iframe);
+  playerContainer.style.display = "block";
 
-  currentPlayer = playerContainer;  // Actualizar el reproductor actual para futuras interacciones
+  currentPlayer = playerContainer;
 }
-
-
-
 
     function selectAlbum(index) {
       const albums = document.querySelectorAll('.album');
