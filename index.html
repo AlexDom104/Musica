@@ -71,28 +71,38 @@
     h1 {
       text-align: center;
     }
-    .floating-icon {
+ .floating-icon {
   position: fixed;
   bottom: 20px;
   right: 20px;
   background-color: #FFD700;
-  border-radius: 50%;
-  padding: 15px;
+  border-radius: 30px;
+  padding: 10px 15px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   z-index: 1000;
-  transition: transform 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: transform 0.3s ease, background-color 0.3s ease;
 }
 .floating-icon img {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
+}
+.floating-icon span {
+  color: #1c1c1c;
+  font-weight: bold;
+  font-size: 16px;
 }
 .floating-icon:hover {
   transform: scale(1.1);
+  background-color: #ffe55c;
 }
   </style>
-  <div class="floating-icon" onclick="window.open('https://linktr.ee/alexdom104', '_blank')">
+<div class="floating-icon" onclick="window.open('https://linktr.ee/alexdom104', '_blank')">
   <img src="https://icon-library.com/images/link-icon-svg/link-icon-svg-29.jpg" alt="Linktree" />
+  <span>Redes</span>
 </div>
   
 </head>
@@ -106,7 +116,7 @@
       <img src="https://imgur.com/v9NQlEy.jpeg" alt="Sombras del Camino" />
     </div>
     <div class="album" onclick="selectAlbum(2)">
-      <img src="https://i.imgur.com/SdJYlLO.jpeg" alt="El Corazón se Eleva" />
+      <img src="https://imgur.com/1QyppRE.jpeg" alt="El Corazón se Eleva" />
     </div>
   </div>
   <div class="tracklist" id="tracklist"></div>
@@ -241,7 +251,7 @@
         el.classList.toggle('selected', i === index);
       });
 
-      const albumTitles = ["Caminos de Melodía", "Sombras del Camino", "El corazón se eleva"];
+      const albumTitles = ["Caminos de Melodía", "Sombras del Camino", "El corazón se Eleva"];
       document.getElementById("album-title").textContent = albumTitles[index];
 
       renderTracks(index);
