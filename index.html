@@ -15,12 +15,6 @@
       flex-direction: column;
       align-items: center;
     }
-    
-    @media (max-width: 768px) {
-  .album-cover {
-    max-width: 90%;
-  }
-}
     .album-cover {
   width: 100%;
   max-width: 300px; /* o el tamaño que gustes para escritorio */
@@ -44,11 +38,14 @@
       border: 2px solid transparent;
     }
 
-    .album img {
-      width: 150px;
-      height: 150px;
-      object-fit: cover;
-    }
+.album img {
+  width: 100%;
+  max-width: 150px;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 12px;
+}
 
     .album.selected {
       transform: scale(1.2);
