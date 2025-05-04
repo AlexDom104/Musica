@@ -2,8 +2,8 @@
 <html lang="es">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Caminos de Melodía - Alexdom104</title>
   <style>
     body {
@@ -15,33 +15,20 @@
       flex-direction: column;
       align-items: center;
     }
-    .container {
-  max-width: 1000px;
+    
+    @media (max-width: 768px) {
+  .album-cover {
+    max-width: 90%;
+  }
+}
+    .album-cover {
   width: 100%;
+  max-width: 300px; /* o el tamaño que gustes para escritorio */
+  height: auto;
+  display: block;
   margin: 0 auto;
-  padding: 1rem;
-  box-sizing: border-box;
 }
-@media (max-width: 768px) {
-  .album-cards-container {
-    flex-direction: column;
-    align-items: center;
-  }
 
-  .album-card {
-    width: 90% !important;
-    max-width: none;
-  }
-
-  .album-details {
-    width: 100% !important;
-  }
-
-  body {
-    font-size: 16px;
-    padding: 10px;
-  }
-}
     .album-gallery {
       display: flex;
       justify-content: center;
