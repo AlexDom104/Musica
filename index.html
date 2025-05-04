@@ -198,52 +198,74 @@
   { title: "El Verdadero Reguetón", url: "https://youtube.com/embed/cYEjuWomzCI?autoplay=1" }
     ];
     
-        // Aquí puedes agregar las canciones de "El Corazón Se Eleva"
     const elCorazonSeEleva = [
-      // Ejemplo de cómo agregar una canción:
-      // { title: "Nombre de la canción", url: "enlace_de_youtube" },
+{ title: "Deja que el viento nos lleve", url: "https://www.youtube.com/embed/RLyNKeiRtwc?autoplay=1" }
     ];
     
     let currentPlayer = null;
 
-    function renderTracks(album) {
-      const list = document.getElementById("tracklist");
-      list.innerHTML = "";
+ function renderTracks(album) {
+  const list = document.getElementById("tracklist");
+  list.innerHTML = "";
 
-      const tracks = album === 0 ? caminosDeMelodia : (album === 1 ? sombrasDelCamino : []);
-      tracks.forEach((track, index) => {
-        const div = document.createElement("div");
-        div.className = "track";
-        div.innerHTML = `
-          <span>${track.title}</span>
-          <button onclick="playTrack(${index}, ${album})">Reproducir</button>
-          <div class="player-container" id="player-${album}-${index}">
-            <!-- Aquí aparecerá el reproductor -->
-          </div>
-        `;
-        list.appendChild(div);
-      });
-    }
+  let tracks;
+  if (album === 0) {
+    tracks = caminosDeMelodia;
+  } else if (album === 1) {
+    tracks = sombrasDelCamino;
+  } else if (album === 2) {
+    tracks = elCorazonSeEleva;  // Ahora se asigna correctamente el tercer álbum
+  }
 
-    function playTrack(index, album) {
-      if (currentPlayer !== null) {
-        currentPlayer.innerHTML = "";
-        currentPlayer.style.display = "none";
-      }
+  tracks.forEach((track, index) => {
+    const div = document.createElement("div");
+    div.className = "track";
+    div.innerHTML = `
+      <span>${track.title}</span>
+      <button onclick="playTrack(${index}, ${album})">Reproducir</button>
+      <div class="player-container" id="player-${album}-${index}">
+        <!-- Aquí aparecerá el reproductor -->
+      </div>
+    `;
+    list.appendChild(div);
+  });
+}
 
-      const tracks = album === 0 ? caminosDeMelodia : (album === 1 ? sombrasDelCamino : []);
-      const iframe = document.createElement("iframe");
-      iframe.src = tracks[index].url;
-      iframe.allow = "autoplay; encrypted-media";
-      iframe.allowfullscreen = true;
+function playTrack(index, album) {
+  // Si hay un reproductor actual, eliminarlo
+  if (currentPlayer !== null) {
+    currentPlayer.innerHTML = "";
+    currentPlayer.style.display = "none";
+  }
 
-      const playerContainer = document.getElementById(`player-${album}-${index}`);
-      playerContainer.innerHTML = "";
-      playerContainer.appendChild(iframe);
-      playerContainer.style.display = "block";
+  // Escoger el álbum y la pista correcta
+  const tracks = album === 0 ? caminosDeMelodia : (album === 1 ? sombrasDelCamino : elCorazonSeEleva);
+  const track = tracks[index];
 
-      currentPlayer = playerContainer;
-    }
+  // Crear el iframe con autoplay=1
+  const iframe = document.createElement("iframe");
+  iframe.src = `${track.url}?autoplay=1&mute=0`;  // Fuerza el autoplay y asegura que no está en modo mudo
+  iframe.width = "560";  // Ajusta las dimensiones del iframe
+  iframe.height = "315";
+  iframe.frameborder = "0";
+  iframe.allow = "autoplay; encrypted-media";
+  iframe.allowfullscreen = true;
+
+  // Colocar el iframe en el contenedor adecuado
+  const playerContainer = document.getElementById(`player-${album}-${index}`);
+  playerContainer.innerHTML = "";  // Limpiar el contenedor
+  playerContainer.appendChild(iframe);
+  playerContainer.style.display = "block";  // Mostrar el contenedor
+
+  // Intentar activar la reproducción con un pequeño retraso
+  setTimeout(() => {
+    iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+  }, 1000); // Espera 1 segundo antes de intentar reproducir el video
+
+  // Actualizar el reproductor actual
+  currentPlayer = playerContainer;
+}
+
 
     function selectAlbum(index) {
       const albums = document.querySelectorAll('.album');
