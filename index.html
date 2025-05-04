@@ -231,40 +231,53 @@
   });
 }
 
+ function renderTracks(album) {
+  const list = document.getElementById("tracklist");
+  list.innerHTML = "";
+
+  const tracks = album === 0 ? caminosDeMelodia : (album === 1 ? sombrasDelCamino : []);
+  tracks.forEach((track, index) => {
+    const div = document.createElement("div");
+    div.className = "track";
+    div.innerHTML = `
+      <span>${track.title}</span>
+      <button onclick="playTrack(${index}, ${album})">Reproducir</button>
+      <div class="player-container" id="player-${album}-${index}">
+        <!-- Aquí aparecerá el reproductor -->
+      </div>
+    `;
+    list.appendChild(div);
+  });
+}
+
 function playTrack(index, album) {
-  // Si hay un reproductor actual, eliminarlo
   if (currentPlayer !== null) {
     currentPlayer.innerHTML = "";
     currentPlayer.style.display = "none";
   }
 
-  // Escoger el álbum y la pista correcta
-  const tracks = album === 0 ? caminosDeMelodia : (album === 1 ? sombrasDelCamino : elCorazonSeEleva);
+  const tracks = album === 0 ? caminosDeMelodia : (album === 1 ? sombrasDelCamino : []);
   const track = tracks[index];
-
-  // Crear el iframe con autoplay=1
+  
+  // Crear el iframe con autoplay
   const iframe = document.createElement("iframe");
-  iframe.src = `${track.url}?autoplay=1&mute=0`;  // Fuerza el autoplay y asegura que no está en modo mudo
-  iframe.width = "560";  // Ajusta las dimensiones del iframe
+  iframe.src = `${track.url}?autoplay=1`;  // Asegurarse de que autoplay esté presente en la URL
+  iframe.width = "560";
   iframe.height = "315";
   iframe.frameborder = "0";
-  iframe.allow = "autoplay; encrypted-media";
+  iframe.allow = "autoplay; encrypted-media"; // Asegurarse de que YouTube permita autoplay
   iframe.allowfullscreen = true;
 
-  // Colocar el iframe en el contenedor adecuado
+  // Seleccionar el contenedor donde se mostrará el video
   const playerContainer = document.getElementById(`player-${album}-${index}`);
-  playerContainer.innerHTML = "";  // Limpiar el contenedor
-  playerContainer.appendChild(iframe);
-  playerContainer.style.display = "block";  // Mostrar el contenedor
+  playerContainer.innerHTML = "";  // Limpiar cualquier contenido previo
+  playerContainer.appendChild(iframe);  // Agregar el iframe al contenedor
+  playerContainer.style.display = "block";  // Asegurar que el contenedor sea visible
 
-  // Intentar activar la reproducción con un pequeño retraso
-  setTimeout(() => {
-    iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-  }, 1000); // Espera 1 segundo antes de intentar reproducir el video
-
-  // Actualizar el reproductor actual
-  currentPlayer = playerContainer;
+  currentPlayer = playerContainer;  // Actualizar el reproductor actual para futuras interacciones
 }
+
+
 
 
     function selectAlbum(index) {
