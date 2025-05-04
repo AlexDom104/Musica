@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Caminos de Melodía - Alexdom104</title>
   <style>
     body {
@@ -14,12 +15,50 @@
       flex-direction: column;
       align-items: center;
     }
+.album-cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.album-card {
+  flex: 1 1 250px;
+  max-width: 300px;
+  min-width: 200px;
+  width: 100%;
+}
+
+/* Hacer que las imágenes no se salgan */
+.album-card img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Diseño responsive para pantallas pequeñas */
+@media (max-width: 768px) {
+  .album-card {
+    flex: 1 1 100%;
+    max-width: 90%;
+  }
+
+  .album-details {
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  body {
+    font-size: 1rem;
+    padding: 1rem;
+  }
+}
     .album-gallery {
       display: flex;
       justify-content: center;
       margin: 30px 0;
       gap: 1rem;
     }
+
     .album {
       cursor: pointer;
       transition: transform 0.3s ease;
@@ -27,20 +66,24 @@
       overflow: hidden;
       border: 2px solid transparent;
     }
+
     .album img {
       width: 150px;
       height: 150px;
       object-fit: cover;
     }
+
     .album.selected {
       transform: scale(1.2);
       border-color: #FFD700;
     }
+
     .tracklist {
       margin-top: 20px;
       max-width: 500px;
       width: 90%;
     }
+
     .track {
       margin: 10px 0;
       padding: 10px;
@@ -51,6 +94,7 @@
       align-items: center;
       position: relative;
     }
+
     .track button {
       padding: 6px 10px;
       background: #FFD700;
@@ -58,54 +102,62 @@
       border-radius: 5px;
       cursor: pointer;
     }
+
     .track .player-container {
       margin-top: 10px;
       display: none;
     }
+
     iframe {
       border: none;
       width: 100%;
       height: 300px;
       max-width: 600px;
     }
+
     h1 {
       text-align: center;
     }
- .floating-icon {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: #FFD700;
-  border-radius: 30px;
-  padding: 10px 15px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-  cursor: pointer;
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  transition: transform 0.3s ease, background-color 0.3s ease;
-}
-.floating-icon img {
-  width: 30px;
-  height: 30px;
-}
-.floating-icon span {
-  color: #1c1c1c;
-  font-weight: bold;
-  font-size: 16px;
-}
-.floating-icon:hover {
-  transform: scale(1.1);
-  background-color: #ffe55c;
-}
+
+    .floating-icon {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #FFD700;
+      border-radius: 30px;
+      padding: 10px 15px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    .floating-icon img {
+      width: 30px;
+      height: 30px;
+    }
+
+    .floating-icon span {
+      color: #1c1c1c;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .floating-icon:hover {
+      transform: scale(1.1);
+      background-color: #ffe55c;
+    }
   </style>
-<div class="floating-icon" onclick="window.open('https://linktr.ee/alexdom104', '_blank')">
-  <img src="https://icon-library.com/images/link-icon-svg/link-icon-svg-29.jpg" alt="Linktree" />
-  <span>Redes</span>
-</div>
-  
+  <div class="floating-icon" onclick="window.open('https://linktr.ee/alexdom104', '_blank')">
+    <img src="https://icon-library.com/images/link-icon-svg/link-icon-svg-29.jpg" alt="Linktree" />
+    <span>Redes</span>
+  </div>
+
 </head>
+
 <body>
   <h1 id="album-title">Caminos de Melodía</h1>
   <div class="album-gallery">
@@ -122,165 +174,361 @@
   <div class="tracklist" id="tracklist"></div>
 
   <script>
-    const caminosDeMelodia = [
-      { title: "Luces del Camino", url: "https://www.youtube.com/embed/dELrc_EeqeE?autoplay=1" },
-      { title: "Tan Hermosa para Mi", url: "https://www.youtube.com/embed/P1lPXweu0Eg?autoplay=1" },
-      { title: "Tejados (V1)", url: "https://www.youtube.com/embed/YL3T9kralI8?autoplay=1" },
-      { title: "Tejados (V2)", url: "https://www.youtube.com/embed/4tq1DgNNd9U?autoplay=1" },
-      { title: "Yo era un niño caminando", url: "https://www.youtube.com/embed/twTVou-ymRY?autoplay=1" },
-      { title: "Nunca Es el Momento", url: "https://www.youtube.com/embed/twTVou-ymRY?autoplay=1" },
-      { title: "Listo para Ir", url: "https://www.youtube.com/embed/1qcMidqeEiI?autoplay=1" },
-      { title: "Grandes Esperanzas", url: "https://www.youtube.com/embed/tmRzi2pC1Vg?autoplay=1" },
-      { title: "Fue Bueno Conocerte", url: "https://www.youtube.com/embed/PZjt-6QYcBQ?autoplay=1" },
-      { title: "El Evangelio de los Caidos (V1)", url: "https://www.youtube.com/embed/RJOc0dzVQEo?autoplay=1" },
-      { title: "El Evangelio de los Caidos (V2)", url: "https://www.youtube.com/embed/0YGaJxrblkE?autoplay=1" },
-      { title: "Duro Contra el Muro", url: "https://www.youtube.com/embed/C_RbMxTJIjs?autoplay=1" },
-      { title: "Dejalo Ir", url: "https://www.youtube.com/embed/LNBigrUMPFE?autoplay=1" },
-      { title: "Aviones en la Noche", url: "https://www.youtube.com/embed/C_RbMxTJIjs?autoplay=1" },
-      { title: "Al Borde", url: "https://www.youtube.com/embed/flnuz8cSUJM?autoplay=1" },
-      { title: "Ahora o Nunca", url: "https://www.youtube.com/embed/toTF9gfVPcc?autoplay=1" },
-      { title: "A Mil Kilómetros de Casa", url: "https://www.youtube.com/embed/W6YKcfRy6Vs?autoplay=1" },
-      { title: "Siempre por Ti", url: "https://www.youtube.com/embed/2Mcw4KGYlng?autoplay=1" },
-      { title: "Todo Estará Bien", url: "https://www.youtube.com/embed/bo6wNyxIGYQ?autoplay=1" },
-      { title: "Sueños y Estrellas", url: "https://www.youtube.com/embed/HYz8WfV5O0A?autoplay=1" }
+    const caminosDeMelodia = [{
+        title: "Luces del Camino",
+        url: "https://www.youtube.com/embed/dELrc_EeqeE?autoplay=1"
+      },
+      {
+        title: "Tan Hermosa para Mi",
+        url: "https://www.youtube.com/embed/P1lPXweu0Eg?autoplay=1"
+      },
+      {
+        title: "Tejados (V1)",
+        url: "https://www.youtube.com/embed/YL3T9kralI8?autoplay=1"
+      },
+      {
+        title: "Tejados (V2)",
+        url: "https://www.youtube.com/embed/4tq1DgNNd9U?autoplay=1"
+      },
+      {
+        title: "Yo era un niño caminando",
+        url: "https://www.youtube.com/embed/twTVou-ymRY?autoplay=1"
+      },
+      {
+        title: "Nunca Es el Momento",
+        url: "https://www.youtube.com/embed/twTVou-ymRY?autoplay=1"
+      },
+      {
+        title: "Listo para Ir",
+        url: "https://www.youtube.com/embed/1qcMidqeEiI?autoplay=1"
+      },
+      {
+        title: "Grandes Esperanzas",
+        url: "https://www.youtube.com/embed/tmRzi2pC1Vg?autoplay=1"
+      },
+      {
+        title: "Fue Bueno Conocerte",
+        url: "https://www.youtube.com/embed/PZjt-6QYcBQ?autoplay=1"
+      },
+      {
+        title: "El Evangelio de los Caidos (V1)",
+        url: "https://www.youtube.com/embed/RJOc0dzVQEo?autoplay=1"
+      },
+      {
+        title: "El Evangelio de los Caidos (V2)",
+        url: "https://www.youtube.com/embed/0YGaJxrblkE?autoplay=1"
+      },
+      {
+        title: "Duro Contra el Muro",
+        url: "https://www.youtube.com/embed/C_RbMxTJIjs?autoplay=1"
+      },
+      {
+        title: "Dejalo Ir",
+        url: "https://www.youtube.com/embed/LNBigrUMPFE?autoplay=1"
+      },
+      {
+        title: "Aviones en la Noche",
+        url: "https://www.youtube.com/embed/C_RbMxTJIjs?autoplay=1"
+      },
+      {
+        title: "Al Borde",
+        url: "https://www.youtube.com/embed/flnuz8cSUJM?autoplay=1"
+      },
+      {
+        title: "Ahora o Nunca",
+        url: "https://www.youtube.com/embed/toTF9gfVPcc?autoplay=1"
+      },
+      {
+        title: "A Mil Kilómetros de Casa",
+        url: "https://www.youtube.com/embed/W6YKcfRy6Vs?autoplay=1"
+      },
+      {
+        title: "Siempre por Ti",
+        url: "https://www.youtube.com/embed/2Mcw4KGYlng?autoplay=1"
+      },
+      {
+        title: "Todo Estará Bien",
+        url: "https://www.youtube.com/embed/bo6wNyxIGYQ?autoplay=1"
+      },
+      {
+        title: "Sueños y Estrellas",
+        url: "https://www.youtube.com/embed/HYz8WfV5O0A?autoplay=1"
+      }
     ];
-
-    const sombrasDelCamino = [
-  { title: "Alexdom", url: "https://youtube.com/embed/bYSwJGzjCfg?autoplay=1" },
-  { title: "Buenos Días Mundo", url: "https://youtube.com/embed/XDDJWmp4DKY?autoplay=1" },
-  { title: "He Vivido Mil Vidas", url: "https://youtube.com/embed/xOR_9IFwllk?autoplay=1" },
-  { title: "Mala Suerte En Cada Esquina", url: "https://youtube.com/embed/5LW2qgApGR0?autoplay=1" },
-  { title: "Alone", url: "https://youtube.com/embed/cw9yRKaz5pU?autoplay=1" },
-  { title: "Siempre Por Ti - Rock Dance", url: "https://youtube.com/embed/rttYvSYwdPg?autoplay=1" },
-  { title: "Tejados (V3)", url: "https://youtube.com/embed/PDHJkujTvfI?autoplay=1" },
-  { title: "El Evangelio De Los Caídos (V3)", url: "https://youtube.com/embed/VyspEfmNjAo?autoplay=1" },
-  { title: "Oddysey", url: "https://youtube.com/embed/UJewR3c821U?autoplay=1" },
-  { title: "Humo En El Espejo", url: "https://youtube.com/embed/dlbUUX22fQA?autoplay=1" },
-  { title: "El Camino", url: "https://youtube.com/embed/jxoOqYSTySw?autoplay=1" },
-  { title: "Estrella Fugaz", url: "https://youtube.com/embed/FFBb23wboVE?autoplay=1" },
-  { title: "84", url: "https://youtube.com/embed/218euNCVFXI?autoplay=1" },
-  { title: "Despierta De Tu Letargo", url: "https://youtube.com/embed/nfuKt894E0A?autoplay=1" },
-  { title: "Corriendo Entre Sombras", url: "https://youtube.com/embed/KJ58TnBGuEM?autoplay=1" },
-  { title: "Despierto En La Oscuridad", url: "https://youtube.com/embed/4rgcz98edBs?autoplay=1" },
-  { title: "Viking Horizons", url: "https://youtube.com/embed/dM09P22eix8?autoplay=1" },
-  { title: "Tan Alto", url: "https://youtube.com/embed/6TwOyv9DuaE?autoplay=1" },
-  { title: "Sombras Del Camino", url: "https://youtube.com/embed/x2ahEOSJWTQ?autoplay=1" },
-  { title: "Siento Tu Esencia (V1)", url: "https://youtube.com/embed/eQsZ3ABO3pM?autoplay=1" },
-  { title: "Siento Tu Esencia (V2)", url: "https://youtube.com/embed/j3MHMm502eM?autoplay=1" },
-  { title: "Euphoric Nights (V1)", url: "https://youtube.com/embed/2bcPk6YEQfs?autoplay=1" },
-  { title: "Bajo El Sol De La Sierra", url: "https://youtube.com/embed/UJduwbUuKys?autoplay=1" },
-  { title: "Bajo El Manto Del Rio", url: "https://youtube.com/embed/R7zrBKM95eM?autoplay=1" },
-  { title: "Siempre, De Todas Formas", url: "https://youtube.com/embed/in9mR0Tl4QE?autoplay=1" },
-  { title: "85", url: "https://youtube.com/embed/J9ntTN7Q2aM?autoplay=1" },
-  { title: "Sin Avanzar (V1)", url: "https://youtube.com/embed/jMfDYJycpfk?autoplay=1" },
-  { title: "Sin Avanzar (V2)", url: "https://youtube.com/embed/W5GrcokRMwg?autoplay=1" },
-  { title: "Instinto Del Paraíso", url: "https://youtube.com/embed/29FqgmLmxjQ?autoplay=1" },
-  { title: "Electric Transcendence", url: "https://youtube.com/embed/70oh4xO2Kjs?autoplay=1" },
-  { title: "Aullando a La Luna", url: "https://youtube.com/embed/1UqiHwYQ88o?autoplay=1" },
-  { title: "Vivir Y Sentir (V1)", url: "https://youtube.com/embed/24ErgXFylLQ?autoplay=1" },
-  { title: "Vivir Y Sentir (V2)", url: "https://youtube.com/embed/Lv2FOZKAg4U?autoplay=1" },
-  { title: "Vacio 1", url: "https://youtube.com/embed/4PHsNI4spNY?autoplay=1" },
-  { title: "Ojitos Cafes", url: "https://youtube.com/embed/gnpXLPr6w7I?autoplay=1" },
-  { title: "México", url: "https://youtube.com/embed/yA28yxQqAug?autoplay=1" },
-  { title: "Un Paso Más", url: "https://youtube.com/embed/EpMxigDdLps?autoplay=1" },
-  { title: "Euphoric Nights (V2)", url: "https://youtube.com/embed/V6Pr0IYUJ_4?autoplay=1" },
-  { title: "Un Minuto Para Abrazarte", url: "https://youtube.com/embed/gWGXk4gGJzs?autoplay=1" },
-  { title: "Unidos Al Horizonte", url: "https://youtube.com/embed/6AXChfFKDlg?autoplay=1" },
-  { title: "Entre Nosotros", url: "https://youtube.com/embed/WgdQL6J7_8M?autoplay=1" },
-  { title: "Tecno Nativy", url: "https://youtube.com/embed/79viY7Ip0SQ?autoplay=1" },
-  { title: "Un Paso Tras Otro", url: "https://youtube.com/embed/5-Y3ZMxag48?autoplay=1" },
-  { title: "Siempre Estaré Aquí", url: "https://youtube.com/embed/fhLXDsW7weA?autoplay=1" },
-  { title: "Solíamos Ser Felices", url: "https://youtube.com/embed/LlsikFrc-zA?autoplay=1" },
-  { title: "87", url: "https://youtube.com/embed/CzzmmnsE4yg?autoplay=1" },
-  { title: "Corre, Corre Sin Parar", url: "https://youtube.com/embed/B7eSBX58Sjg?autoplay=1" },
-  { title: "Vuela Alto", url: "https://youtube.com/embed/ji-gSkRFMKQ?autoplay=1" },
-  { title: "Outro Alexdom", url: "https://youtube.com/embed/hU9bkImFwCQ?autoplay=1" },
-  { title: "El Verdadero Reguetón", url: "https://youtube.com/embed/cYEjuWomzCI?autoplay=1" }
+    const sombrasDelCamino = [{
+        title: "Alexdom",
+        url: "https://youtube.com/embed/bYSwJGzjCfg?autoplay=1"
+      },
+      {
+        title: "Buenos Días Mundo",
+        url: "https://youtube.com/embed/XDDJWmp4DKY?autoplay=1"
+      },
+      {
+        title: "He Vivido Mil Vidas",
+        url: "https://youtube.com/embed/xOR_9IFwllk?autoplay=1"
+      },
+      {
+        title: "Mala Suerte En Cada Esquina",
+        url: "https://youtube.com/embed/5LW2qgApGR0?autoplay=1"
+      },
+      {
+        title: "Alone",
+        url: "https://youtube.com/embed/cw9yRKaz5pU?autoplay=1"
+      },
+      {
+        title: "Siempre Por Ti - Rock Dance",
+        url: "https://youtube.com/embed/rttYvSYwdPg?autoplay=1"
+      },
+      {
+        title: "Tejados (V3)",
+        url: "https://youtube.com/embed/PDHJkujTvfI?autoplay=1"
+      },
+      {
+        title: "El Evangelio De Los Caídos (V3)",
+        url: "https://youtube.com/embed/VyspEfmNjAo?autoplay=1"
+      },
+      {
+        title: "Oddysey",
+        url: "https://youtube.com/embed/UJewR3c821U?autoplay=1"
+      },
+      {
+        title: "Humo En El Espejo",
+        url: "https://youtube.com/embed/dlbUUX22fQA?autoplay=1"
+      },
+      {
+        title: "El Camino",
+        url: "https://youtube.com/embed/jxoOqYSTySw?autoplay=1"
+      },
+      {
+        title: "Estrella Fugaz",
+        url: "https://youtube.com/embed/FFBb23wboVE?autoplay=1"
+      },
+      {
+        title: "84",
+        url: "https://youtube.com/embed/218euNCVFXI?autoplay=1"
+      },
+      {
+        title: "Despierta De Tu Letargo",
+        url: "https://youtube.com/embed/nfuKt894E0A?autoplay=1"
+      },
+      {
+        title: "Corriendo Entre Sombras",
+        url: "https://youtube.com/embed/KJ58TnBGuEM?autoplay=1"
+      },
+      {
+        title: "Despierto En La Oscuridad",
+        url: "https://youtube.com/embed/4rgcz98edBs?autoplay=1"
+      },
+      {
+        title: "Viking Horizons",
+        url: "https://youtube.com/embed/dM09P22eix8?autoplay=1"
+      },
+      {
+        title: "Tan Alto",
+        url: "https://youtube.com/embed/6TwOyv9DuaE?autoplay=1"
+      },
+      {
+        title: "Sombras Del Camino",
+        url: "https://youtube.com/embed/x2ahEOSJWTQ?autoplay=1"
+      },
+      {
+        title: "Siento Tu Esencia (V1)",
+        url: "https://youtube.com/embed/eQsZ3ABO3pM?autoplay=1"
+      },
+      {
+        title: "Siento Tu Esencia (V2)",
+        url: "https://youtube.com/embed/j3MHMm502eM?autoplay=1"
+      },
+      {
+        title: "Euphoric Nights (V1)",
+        url: "https://youtube.com/embed/2bcPk6YEQfs?autoplay=1"
+      },
+      {
+        title: "Bajo El Sol De La Sierra",
+        url: "https://youtube.com/embed/UJduwbUuKys?autoplay=1"
+      },
+      {
+        title: "Bajo El Manto Del Rio",
+        url: "https://youtube.com/embed/R7zrBKM95eM?autoplay=1"
+      },
+      {
+        title: "Siempre, De Todas Formas",
+        url: "https://youtube.com/embed/in9mR0Tl4QE?autoplay=1"
+      },
+      {
+        title: "85",
+        url: "https://youtube.com/embed/J9ntTN7Q2aM?autoplay=1"
+      },
+      {
+        title: "Sin Avanzar (V1)",
+        url: "https://youtube.com/embed/jMfDYJycpfk?autoplay=1"
+      },
+      {
+        title: "Sin Avanzar (V2)",
+        url: "https://youtube.com/embed/W5GrcokRMwg?autoplay=1"
+      },
+      {
+        title: "Instinto Del Paraíso",
+        url: "https://youtube.com/embed/29FqgmLmxjQ?autoplay=1"
+      },
+      {
+        title: "Electric Transcendence",
+        url: "https://youtube.com/embed/70oh4xO2Kjs?autoplay=1"
+      },
+      {
+        title: "Aullando a La Luna",
+        url: "https://youtube.com/embed/1UqiHwYQ88o?autoplay=1"
+      },
+      {
+        title: "Vivir Y Sentir (V1)",
+        url: "https://youtube.com/embed/24ErgXFylLQ?autoplay=1"
+      },
+      {
+        title: "Vivir Y Sentir (V2)",
+        url: "https://youtube.com/embed/Lv2FOZKAg4U?autoplay=1"
+      },
+      {
+        title: "Vacio 1",
+        url: "https://youtube.com/embed/4PHsNI4spNY?autoplay=1"
+      },
+      {
+        title: "Ojitos Cafes",
+        url: "https://youtube.com/embed/gnpXLPr6w7I?autoplay=1"
+      },
+      {
+        title: "México",
+        url: "https://youtube.com/embed/yA28yxQqAug?autoplay=1"
+      },
+      {
+        title: "Un Paso Más",
+        url: "https://youtube.com/embed/EpMxigDdLps?autoplay=1"
+      },
+      {
+        title: "Euphoric Nights (V2)",
+        url: "https://youtube.com/embed/V6Pr0IYUJ_4?autoplay=1"
+      },
+      {
+        title: "Un Minuto Para Abrazarte",
+        url: "https://youtube.com/embed/gWGXk4gGJzs?autoplay=1"
+      },
+      {
+        title: "Unidos Al Horizonte",
+        url: "https://youtube.com/embed/6AXChfFKDlg?autoplay=1"
+      },
+      {
+        title: "Entre Nosotros",
+        url: "https://youtube.com/embed/WgdQL6J7_8M?autoplay=1"
+      },
+      {
+        title: "Tecno Nativy",
+        url: "https://youtube.com/embed/79viY7Ip0SQ?autoplay=1"
+      },
+      {
+        title: "Un Paso Tras Otro",
+        url: "https://youtube.com/embed/5-Y3ZMxag48?autoplay=1"
+      },
+      {
+        title: "Siempre Estaré Aquí",
+        url: "https://youtube.com/embed/fhLXDsW7weA?autoplay=1"
+      },
+      {
+        title: "Solíamos Ser Felices",
+        url: "https://youtube.com/embed/LlsikFrc-zA?autoplay=1"
+      },
+      {
+        title: "87",
+        url: "https://youtube.com/embed/CzzmmnsE4yg?autoplay=1"
+      },
+      {
+        title: "Corre, Corre Sin Parar",
+        url: "https://youtube.com/embed/B7eSBX58Sjg?autoplay=1"
+      },
+      {
+        title: "Vuela Alto",
+        url: "https://youtube.com/embed/ji-gSkRFMKQ?autoplay=1"
+      },
+      {
+        title: "Outro Alexdom",
+        url: "https://youtube.com/embed/hU9bkImFwCQ?autoplay=1"
+      },
+      {
+        title: "El Verdadero Reguetón",
+        url: "https://youtube.com/embed/cYEjuWomzCI?autoplay=1"
+      }
     ];
-    
-    
-    const elCorazonSeEleva = [
-{ title: "Deja que el viento nos lleve", url: "https://www.youtube.com/embed/RLyNKeiRtwc?autoplay=1" }
-    ];
-    
+    const elCorazonSeEleva = [{
+      title: "Deja que el viento nos lleve",
+      url: "https://www.youtube.com/embed/RLyNKeiRtwc?autoplay=1"
+    }];
     let currentPlayer = null;
 
-function renderTracks(album) {
-  const list = document.getElementById("tracklist");
-  list.innerHTML = "";  // Limpiar lista de canciones
-
-  let tracks;
-  if (album === 0) {
-    tracks = caminosDeMelodia;
-  } else if (album === 1) {
-    tracks = sombrasDelCamino;
-  } else if (album === 2) {
-    tracks = elCorazonSeEleva; // Aquí se agrega el tercer álbum
-  }
-
-  // Crear la lista de canciones
-  tracks.forEach((track, index) => {
-    const div = document.createElement("div");
-    div.className = "track";
-    div.innerHTML = `
+    function renderTracks(album) {
+      const list = document.getElementById("tracklist");
+      list.innerHTML = ""; // Limpiar lista de canciones
+      let tracks;
+      if (album === 0) {
+        tracks = caminosDeMelodia;
+      } else if (album === 1) {
+        tracks = sombrasDelCamino;
+      } else if (album === 2) {
+        tracks = elCorazonSeEleva; // Aquí se agrega el tercer álbum
+      }
+      // Crear la lista de canciones
+      tracks.forEach((track, index) => {
+        const div = document.createElement("div");
+        div.className = "track";
+        div.innerHTML = `
       <span>${track.title}</span>
       <button onclick="playTrack(${index}, ${album})">Reproducir</button>
       <div class="player-container" id="player-${album}-${index}">
         <!-- Aquí aparecerá el reproductor -->
       </div>
     `;
-    list.appendChild(div);
-  });
-}
+        list.appendChild(div);
+      });
+    }
 
-function playTrack(index, album) {
-  // Limpiar cualquier reproductor anterior
-  if (currentPlayer !== null) {
-    currentPlayer.innerHTML = "";
-    currentPlayer.style.display = "none";
-  }
+    function playTrack(index, album) {
+      // Limpiar cualquier reproductor anterior
+      if (currentPlayer !== null) {
+        currentPlayer.innerHTML = "";
+        currentPlayer.style.display = "none";
+      }
+      let tracks;
+      if (album === 0) {
+        tracks = caminosDeMelodia;
+      } else if (album === 1) {
+        tracks = sombrasDelCamino;
+      } else if (album === 2) {
+        tracks = elCorazonSeEleva;
+      }
+      // Crear iframe con el enlace de YouTube
+      const iframe = document.createElement("iframe");
+      iframe.src = tracks[index].url;
+      iframe.allow = "autoplay; encrypted-media";
+      iframe.allowfullscreen = true;
+      // Mostrar el reproductor en la interfaz
+      const playerContainer = document.getElementById(`player-${album}-${index}`);
+      playerContainer.innerHTML = "";
+      playerContainer.appendChild(iframe);
+      playerContainer.style.display = "block";
+      // Guardar referencia al reproductor actual
+      currentPlayer = playerContainer;
+    }
 
-  let tracks;
-  if (album === 0) {
-    tracks = caminosDeMelodia;
-  } else if (album === 1) {
-    tracks = sombrasDelCamino;
-  } else if (album === 2) {
-    tracks = elCorazonSeEleva;
-  }
-
-  // Crear iframe con el enlace de YouTube
-  const iframe = document.createElement("iframe");
-  iframe.src = tracks[index].url;
-  iframe.allow = "autoplay; encrypted-media";
-  iframe.allowfullscreen = true;
-
-  // Mostrar el reproductor en la interfaz
-  const playerContainer = document.getElementById(`player-${album}-${index}`);
-  playerContainer.innerHTML = "";
-  playerContainer.appendChild(iframe);
-  playerContainer.style.display = "block";
-
-  // Guardar referencia al reproductor actual
-  currentPlayer = playerContainer;
-}
-
-function selectAlbum(index) {
-  // Cambiar la clase "selected" en los álbumes
-  document.querySelectorAll(".album").forEach((el, i) => {
-    el.classList.toggle("selected", i === index);
-  });
-
-  // Títulos de los álbumes
-  const albumTitles = ["Caminos de Melodía", "Sombras del Camino", "El Corazón Se Eleva"];
-  document.getElementById("album-title").textContent = albumTitles[index];
-
-  // Cargar las canciones del álbum seleccionado
-  renderTracks(index);
-}
-
-
+    function selectAlbum(index) {
+      // Cambiar la clase "selected" en los álbumes
+      document.querySelectorAll(".album").forEach((el, i) => {
+        el.classList.toggle("selected", i === index);
+      });
+      // Títulos de los álbumes
+      const albumTitles = ["Caminos de Melodía", "Sombras del Camino", "El Corazón Se Eleva"];
+      document.getElementById("album-title").textContent = albumTitles[index];
+      // Cargar las canciones del álbum seleccionado
+      renderTracks(index);
+    }
     renderTracks(0); // Cargar el primer álbum por defecto
   </script>
 </body>
+
 </html>
